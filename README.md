@@ -1,147 +1,174 @@
-# DevTinder Frontend 🚀
+# DevTinder Frontend 👨‍💻🔥
 
-The frontend application for **DevTinder**, a developer networking platform where developers can discover other developers, send connection requests, manage connections, and maintain their profiles.
+A modern React frontend for **DevTinder**, a developer networking platform that helps developers discover other developers, manage profiles, and build professional connections.
 
-This frontend is being developed as part of the **DevTinder MERN stack project**, with a separate backend built using Node.js, Express.js, MongoDB, and Mongoose.
+This frontend communicates with the DevTinder backend through REST APIs and provides a responsive interface for authentication, profile management, developer discovery, connection requests, and connections.
 
-> 🚧 **Project Status:** Frontend development is currently in progress. The current milestone establishes the React application structure, nested routing, reusable layout components, and the initial DaisyUI-based navigation UI.
+## 🌐 Project
+
+- **Frontend Repository:** https://github.com/Madhan-011/devTinder-frontend
+- **Backend Repository:** https://github.com/Madhan-011/devTinder-backend
 
 ---
 
-## 🔗 Related Repository
+## ✨ Features
 
-### DevTinder Backend
+### 🔐 Authentication
+- User signup and login
+- JWT-based authentication handled by the backend
+- Protected application routes
+- Persistent authenticated session
+- Logout functionality
 
-The backend provides the REST APIs for authentication, profile management, connection requests, connections, and the developer feed.
+### 👤 Profile Management
+- View logged-in user's profile
+- Edit profile information
+- Update profile details such as:
+  - First name / last name
+  - Age
+  - Gender
+  - About
+  - Skills
+  - Profile photo
 
-**Backend Repository:**  
-https://github.com/Madhan-011/devTinder-backend
+### 🔎 Developer Feed
+- Discover developer profiles
+- Display developer information in profile cards
+- Send connection requests
+- Ignore developer profiles
+- Fetch developer feed from the backend API
+
+### 🤝 Connection Management
+- Send interested/connection requests
+- View received connection requests
+- Accept or reject requests
+- View accepted connections
+
+### 🧭 Client-Side Routing
+- React Router based navigation
+- Nested routes
+- Protected application flow
+- Shared layout using React Router's `<Outlet />`
+
+### 🎨 UI
+- Responsive React UI
+- Tailwind CSS styling
+- DaisyUI components
+- Reusable React components
+- Responsive profile and form layouts
+
+### 🗃️ State Management
+- Redux Toolkit for global application state
+- Redux store configured with `configureStore`
+- React Redux `Provider`
+- Component-level state with React hooks where appropriate
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-
-- **React 19** – Building the user interface
-- **Vite** – Development server and build tool
-- **React Router DOM** – Client-side routing
-- **Tailwind CSS** – Utility-first CSS
-- **DaisyUI** – Prebuilt UI components for Tailwind CSS
-- **JavaScript (ES6+)** – Application development
-
-### Backend
-
-- **Node.js**
-- **Express.js**
-- **MongoDB**
-- **Mongoose**
-- **JWT**
-- **bcrypt**
-- **cookie-parser**
+| Technology | Purpose |
+|---|---|
+| React | Frontend UI |
+| Vite | Development and build tooling |
+| React Router DOM | Client-side routing |
+| Redux Toolkit | Global state management |
+| React Redux | Connecting React components with Redux |
+| Tailwind CSS | Utility-first styling |
+| DaisyUI | UI components |
+| Axios | HTTP/API communication |
+| JavaScript (ES6+) | Application logic |
+| ESLint | Code quality |
 
 ---
 
-## ✨ Current Features
+## 🏗️ Application Architecture
 
-### 🧭 React Routing
+The project follows a **frontend/backend separation** architecture.
 
-The application uses React Router with nested routes.
-
-| Route | Component | Purpose |
-| --- | --- | --- |
-| `/` | `Body` | Main application layout |
-| `/login` | `Login` | Login page |
-| `/profile` | `Profile` | Profile page |
-
-The `Body` component acts as the parent layout and uses React Router's `Outlet` to render child routes.
-
-### 🧩 Reusable Layout
-
-The current application structure includes:
-
-- `Body` layout component
-- Reusable `Navbar` component
-- Nested routes
-- `Outlet` for rendering child pages
-
-### 🎨 DaisyUI Navbar
-
-The navbar currently contains:
-
-- DevTinder branding
-- User avatar
-- Profile menu
-- Settings option
-- Logout option
-
-### 🌈 DaisyUI Themes
-
-The Tailwind CSS configuration currently enables:
-
-- `light`
-- `luxury`
+```text
+                    ┌──────────────────────┐
+                    │     DevTinder UI     │
+                    │   React + Vite       │
+                    └──────────┬───────────┘
+                               │
+                    React Router / Redux
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      REST APIs       │
+                    │ Axios API Requests   │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │  DevTinder Backend   │
+                    │ Node + Express       │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │       MongoDB        │
+                    │      Database        │
+                    └──────────────────────┘
+```
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-devtinder-frontend/
+devTinder-frontend/
+│
+├── public/
 │
 ├── src/
 │   ├── components/
 │   │   ├── Body.jsx
 │   │   ├── Login.jsx
-│   │   ├── Navbar.jsx
-│   │   └── Profile.jsx
+│   │   ├── Profile.jsx
+│   │   ├── Feed.jsx
+│   │   └── ...
+│   │
+│   ├── store/
+│   │   ├── appStore.js
+│   │   └── ...
+│   │
+│   ├── utils/
+│   │   └── ...
 │   │
 │   ├── App.jsx
-│   ├── index.css
 │   └── main.jsx
 │
-├── public/
+├── .gitignore
+├── eslint.config.js
+├── index.html
 ├── package.json
 ├── package-lock.json
 ├── vite.config.js
 └── README.md
 ```
 
----
-
-## 🔄 Current Application Flow
-
-```text
-                    React App
-                       │
-                       ▼
-                BrowserRouter
-                       │
-                       ▼
-                    Routes
-                       │
-                       ▼
-                     Body
-                    /    \
-                   /      \
-               Navbar    Outlet
-                           │
-                    ┌──────┴──────┐
-                    ▼             ▼
-                  Login        Profile
-```
+> The structure above represents the main application organization. Component and utility files may grow as the project continues to develop.
 
 ---
 
-## ⚙️ Installation
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js
+- npm
+- Git
+- DevTinder backend running locally
 
 ### 1. Clone the repository
 
-Replace `<your-frontend-repository-url>` with the URL of your frontend GitHub repository.
-
 ```bash
-git clone <your-frontend-repository-url>
-cd devtinder-frontend
+git clone https://github.com/Madhan-011/devTinder-frontend.git
+cd devTinder-frontend
 ```
 
 ### 2. Install dependencies
@@ -150,173 +177,258 @@ cd devtinder-frontend
 npm install
 ```
 
-### 3. Start the development server
+### 3. Configure the backend URL
+
+Create a `.env` file in the project root if your frontend configuration uses an environment variable for the backend API.
+
+Example:
+
+```env
+VITE_BASE_URL=http://localhost:7777
+```
+
+Use the variable name expected by the API configuration in your current source code.
+
+### 4. Start the development server
 
 ```bash
 npm run dev
 ```
 
-Vite will start the frontend development server.
+Vite will display the local development URL in the terminal.
 
 ---
 
-## 📜 Available Scripts
+## 🔗 Backend
 
-### Start Development Server
+This frontend requires the DevTinder backend API.
 
-```bash
-npm run dev
-```
-
-Starts the Vite development server with hot module replacement.
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-Creates an optimized production build.
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-Previews the production build locally.
-
-### Run Linter
-
-```bash
-npm run lint
-```
-
-Runs Oxlint to check the project for code-quality issues.
-
----
-
-## 🔌 Backend Integration
-
-The frontend is being developed to consume the APIs available in the DevTinder backend.
-
-The backend currently contains functionality for:
-
-- User signup
-- User login
-- JWT authentication
-- Profile viewing
-- Profile editing
-- Password management
-- Sending connection requests
-- Accepting connection requests
-- Rejecting connection requests
-- Ignoring connection requests
-- Viewing received requests
-- Viewing accepted connections
-- Developer feed
-
-Backend repository:
+**Backend Repository:**
 
 https://github.com/Madhan-011/devTinder-backend
 
-> **Note:** The frontend API integration is still under development. The current frontend milestone focuses on application structure, routing, and UI setup.
+The backend is responsible for:
 
----
-
-## 🚧 Upcoming Features
-
-The frontend roadmap includes:
-
-- Signup page
-- Login form and backend authentication
-- Authentication state management
-- Protected routes
+- User authentication
+- JWT cookies
+- User profile APIs
 - Developer feed
-- Developer profile cards
-- Send connection requests
-- Ignore connection requests
-- Accept / reject connection requests
-- Connections page
-- Profile editing
-- Password change UI
-- Backend API integration
-- Loading states
-- Error handling
-- Responsive UI improvements
+- Connection requests
+- Accepted connections
+- MongoDB data management
+
+Start the backend before using features that require API communication.
 
 ---
 
-## 🎯 Project Flow
+## 🔄 Frontend ↔ Backend Flow
 
-The planned DevTinder user flow is:
+A typical authenticated request works like this:
 
 ```text
-Create Account
-      ↓
-Login
-      ↓
-View Developer Feed
-      ↓
-Discover Developers
-      ↓
-Interested / Ignore
-      ↓
-Send Connection Request
-      ↓
-Receive Connection Request
-      ↓
-Accept / Reject
-      ↓
-Manage Connections
-      ↓
-View / Edit Profile
+User
+ │
+ ▼
+React Component
+ │
+ ▼
+Axios API Request
+ │
+ ▼
+Express Route
+ │
+ ▼
+Authentication Middleware
+ │
+ ▼
+Controller / Route Logic
+ │
+ ▼
+MongoDB
+ │
+ ▼
+API Response
+ │
+ ▼
+Redux / React State
+ │
+ ▼
+Updated UI
 ```
 
 ---
 
-## 📌 Development Milestones
+## 🧭 Routing
 
-### ✅ Milestone 1 — Frontend Setup
+The application uses **React Router DOM** for client-side navigation.
 
-- React + Vite project created
-- Tailwind CSS configured
-- DaisyUI configured
-- React Router configured
-- Nested routes created
-- Body layout created
-- Navbar created
-- Login page created
-- Profile page created
+Example route structure:
 
-### 🚧 Milestone 2 — Authentication
+```text
+/
+├── /login
+├── /profile
+└── /feed
+```
 
-- Signup UI
+The application also uses nested routing with React Router's `<Outlet />` for rendering child routes inside the shared application layout.
+
+---
+
+## 🗃️ Redux Store
+
+Redux Toolkit is used for global state management.
+
+The application store is created using:
+
+```js
+configureStore({
+  reducer: {
+    // application reducers
+  }
+});
+```
+
+The store is provided to the React application using:
+
+```jsx
+<Provider store={appStore}>
+  <App />
+</Provider>
+```
+
+This allows components throughout the application to access shared Redux state.
+
+---
+
+## 🔒 Authentication Flow
+
+```text
+Login / Signup
+      │
+      ▼
+Frontend sends credentials
+      │
+      ▼
+Backend validates user
+      │
+      ▼
+Backend creates JWT
+      │
+      ▼
+JWT stored in authentication cookie
+      │
+      ▼
+Authenticated API requests
+      │
+      ▼
+Protected frontend pages
+```
+
+Authentication and authorization are handled primarily by the backend, while the frontend manages the authenticated user experience and protected navigation.
+
+---
+
+## 📡 API Integration
+
+Axios is used to communicate with the DevTinder backend.
+
+Frontend responsibilities include:
+
+- Sending authentication requests
+- Fetching the logged-in user's profile
+- Updating profile information
+- Fetching developer feed
+- Sending connection requests
+- Fetching received requests
+- Accepting/rejecting requests
+- Fetching connections
+
+---
+
+## 📱 Responsive Design
+
+The UI is designed to work across:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+Tailwind CSS utility classes are used to build responsive layouts, while DaisyUI provides reusable UI components.
+
+---
+
+## 🧪 Available Scripts
+
+```bash
+# Start development server
+npm run dev
+
+# Create production build
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run ESLint
+npm run lint
+```
+
+---
+
+## 🚧 Current Development
+
+DevTinder is being developed incrementally as a full-stack MERN application.
+
+Current frontend work includes:
+
+- React application setup
+- Routing with React Router
 - Login UI
-- Backend authentication integration
-- Authentication state
+- Profile UI
+- Feed UI
+- Redux Toolkit setup
+- API integration
+- Authentication flow
+- Connection request UI
+- Connections management
+
+More features will be added as backend APIs and frontend components are developed.
+
+---
+
+## 🔮 Future Enhancements
+
+Potential improvements include:
+
+- 💬 Real-time developer chat
+- 🔔 Real-time notifications
+- 🔎 Advanced developer search and filtering
+- 🖼️ Profile image upload
+- 📄 Pagination / infinite scrolling
+- 🧪 More frontend unit and integration tests
+- ⚡ Performance optimizations
+- 📱 Further mobile UX improvements
+
+---
+
+## 📚 Learning Focus
+
+This project is being used to strengthen practical understanding of:
+
+- React
+- React Router
+- Redux Toolkit
+- REST API integration
+- Axios
+- Authentication
 - Protected routes
-- Logout
-
-### 🚧 Milestone 3 — Developer Feed
-
-- Fetch developer feed
-- Developer cards
-- Interested / Ignore actions
-- Pagination / loading states
-
-### 🚧 Milestone 4 — Connections
-
-- Received connection requests
-- Accept / reject requests
-- Connections page
-
-### 🚧 Milestone 5 — Profile
-
-- View profile
-- Edit profile
-- Change password
-- Form validation
+- State management
+- Tailwind CSS
+- DaisyUI
+- MERN stack architecture
+- Frontend/backend communication
 
 ---
 
@@ -324,18 +436,15 @@ View / Edit Profile
 
 **Madhan K**
 
-GitHub:  
-https://github.com/Madhan-011
-
-LinkedIn:  
-https://linkedin.com/in/madhan-dev
+- GitHub: https://github.com/Madhan-011
+- LinkedIn: https://linkedin.com/in/madhan-dev
 
 ---
 
-## ⭐ Project
+## 📄 License
 
-**DevTinder — Developer Networking Platform**
+This project is intended for learning and development purposes.
 
-Built as a full-stack MERN application with a React frontend and Node.js/Express/MongoDB backend.
+---
 
-The project is actively being developed, with new frontend functionality and backend integration being added progressively.
+⭐ If you find the project useful, feel free to explore the repository and follow the development journey.
