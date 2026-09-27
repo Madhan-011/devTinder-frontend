@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../store/subStore/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
+import NavbarLogin from "./NavbarLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -48,6 +49,7 @@ const Login = () => {
   };
 
   return (
+  <> <NavbarLogin/>
     <div className="flex justify-center mt-8">
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-96 border p-8">
         <legend className="fieldset-legend text-2xl">
@@ -109,6 +111,7 @@ const Login = () => {
         </p>
       </fieldset>
     </div>
+    </>
   );
 };
 

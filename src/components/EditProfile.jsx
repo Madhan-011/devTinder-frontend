@@ -56,11 +56,11 @@ const EditProfile = ({ user }) => {
               gender,
               about,
             }}
+            showActions={false}
           />
         </div>
         <div className="card w-122 bg-[#171717] border border-[#3d3315] shadow-2xl shadow-black/50">
           <div className="card-body">
-
             <div className="text-center mb-5">
               <h2 className="text-3xl font-bold text-[#d4af37]">
                 Edit Profile
@@ -194,9 +194,7 @@ const EditProfile = ({ user }) => {
       {toast && (
         <div className="toast toast-top toast-center z-50">
           <div className="alert bg-[#d4af37] text-[#111111] border-none shadow-xl">
-            <span className="font-semibold">
-              Profile saved successfully!
-            </span>
+            <span className="font-semibold">Profile saved successfully!</span>
           </div>
         </div>
       )}

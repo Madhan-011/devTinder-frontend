@@ -36,7 +36,7 @@ const Connections = () => {
           connection;
 
         return (
-          <div className=" flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto">
+          <div className=" flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto" key={connection._id}>
             <div>
               <img
                 alt="photo"
