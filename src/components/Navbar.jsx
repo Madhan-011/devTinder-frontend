@@ -10,6 +10,7 @@ import {
   removeConnections,
 } from "../store/subStore/connectionSlice";
 import ThemeToggle from "./ThemeToggle";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -18,11 +19,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        BASE_URL + "/logout",
-        {},
-        { withCredentials: true },
-      );
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
 
       dispatch(removeUser());
       dispatch(clearFeed());
@@ -38,12 +35,8 @@ const Navbar = () => {
   return (
     <header className="app-navbar">
       <div className="app-container flex min-h-17 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="brand-mark">D</span>
-
-          <span className="text-xl font-extrabold tracking-tight">
-            Dev<span className="text-primary">Tinder</span>
-          </span>
+        <Link to="/" className="flex items-center">
+          <Logo />
         </Link>
 
         <div className="flex items-center gap-2">
@@ -62,10 +55,7 @@ const Navbar = () => {
                   aria-label="Open account menu"
                 >
                   <div className="w-10 rounded-full border border-base-300">
-                    <img
-                      src={user.photoUrl}
-                      alt="Your profile"
-                    />
+                    <img src={user.photoUrl} alt="Your profile" />
                   </div>
                 </button>
 
@@ -91,6 +81,7 @@ const Navbar = () => {
 
                   <li>
                     <button
+                      type="button"
                       onClick={handleLogout}
                       className="text-error"
                     >
