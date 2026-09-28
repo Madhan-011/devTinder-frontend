@@ -170,13 +170,13 @@ const UserCard = ({ user, showActions = true }) => {
           draggable="false"
         />
 
-        <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-gray-700 shadow-sm">
+        <span className="absolute left-4 top-4 rounded-full border border-base-300 bg-base-100/95 px-3 py-1 text-xs font-bold text-base-content shadow-sm">
           Developer
         </span>
 
         {swipeLabel && (
           <div
-            className={`absolute right-4 top-4 rotate-[-8deg] rounded-lg border-2 bg-white/95 px-3 py-1 text-sm font-extrabold tracking-wider shadow-sm ${swipeLabelClass}`}
+            className={`absolute right-4 top-4 rotate-[-8deg] rounded-lg border-2 bg-base-100/95 px-3 py-1 text-sm font-extrabold tracking-wider shadow-sm ${swipeLabelClass}`}
           >
             {swipeLabel}
           </div>
@@ -185,35 +185,35 @@ const UserCard = ({ user, showActions = true }) => {
 
       <div className="p-5">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <h2 className="text-2xl font-extrabold tracking-tight text-gray-800">
+          <h2 className="text-2xl font-extrabold tracking-tight text-base-content">
             {firstName} {lastName}
           </h2>
 
           {age && (
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-base-content/60">
               {age}
             </span>
           )}
         </div>
 
         {gender && (
-          <p className="mt-1 text-sm capitalize text-gray-500">
+          <p className="mt-1 text-sm capitalize text-base-content/60">
             {gender}
           </p>
         )}
 
-        <div className="my-4 border-t border-gray-100" />
+        <div className="my-4 border-t border-base-300" />
 
-        <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-base-content/55">
           About
         </h3>
 
-        <p className="mt-2 whitespace-pre-line break-words text-sm leading-6 text-gray-700">
+        <p className="mt-2 whitespace-pre-line break-words text-sm leading-6 text-base-content/75">
           {about || "This developer hasn't added a bio yet."}
         </p>
 
         {showActions && (
-          <div className="mt-6 grid grid-cols-2 gap-3 border-t border-gray-100 pt-4">
+          <div className="mt-6 grid grid-cols-2 gap-3 border-t border-base-300 pt-4">
             <button
               type="button"
               className="app-button app-button-outline"

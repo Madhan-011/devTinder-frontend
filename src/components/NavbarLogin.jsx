@@ -1,6 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 const NavbarLogin = () => {
   return (
@@ -8,21 +8,26 @@ const NavbarLogin = () => {
       <div className="app-container flex min-h-[68px] items-center justify-between">
         <Link to="/login" className="flex items-center gap-2">
           <span className="brand-mark">D</span>
+
           <span className="text-xl font-extrabold tracking-tight">
             Dev<span className="text-primary">Tinder</span>
           </span>
         </Link>
 
-        <span className="hidden text-sm text-gray-500 sm:block">
-          Connect with developers
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="hidden text-sm text-base-content/60 sm:block">
+            Connect with developers
+          </span>
 
-        <Link
-          to="/login"
-          className="app-button app-button-outline"
-        >
-          Log in
-        </Link>
+          <ThemeToggle />
+
+          <Link
+            to="/login"
+            className="app-button app-button-outline"
+          >
+            Log in
+          </Link>
+        </div>
       </div>
     </header>
   );
