@@ -1,4 +1,253 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap");
+
 @import "tailwindcss";
+
 @plugin "daisyui" {
-   themes: light --default, luxury --prefersdark;
-} 
+  themes: devconnect --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "devconnect";
+  default: true;
+  color-scheme: light;
+
+  --color-base-100: #faf9f6;
+  --color-base-200: #f1f0eb;
+  --color-base-300: #e6e5df;
+  --color-base-content: #252a32;
+
+  --color-primary: #326b80;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #e4a66a;
+  --color-secondary-content: #29251f;
+
+  --color-accent: #4d8272;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #29323b;
+  --color-neutral-content: #f8fafc;
+
+  --color-info: #397b9b;
+  --color-info-content: #ffffff;
+
+  --color-success: #367a5b;
+  --color-success-content: #ffffff;
+
+  --color-warning: #b77932;
+  --color-warning-content: #ffffff;
+
+  --color-error: #bd5353;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.75rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1rem;
+
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+:root {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: #faf9f6;
+  color: #252a32;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: #faf9f6;
+}
+
+.app-container {
+  width: min(1120px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  min-height: 68px;
+  border-bottom: 1px solid #e9e7e1;
+  background: rgba(250, 249, 246, 0.96);
+  backdrop-filter: blur(12px);
+}
+
+.brand-mark {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #326b80;
+  color: white;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.app-panel {
+  border: 1px solid #e8e6df;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(39, 47, 54, 0.035);
+}
+
+.app-muted {
+  color: #777d83;
+}
+
+.app-heading {
+  color: #252a32;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.app-input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid #dcdedb;
+  border-radius: 10px;
+  background: #fff;
+  padding: 11px 13px;
+  color: #252a32;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.app-input::placeholder {
+  color: #a0a4a5;
+}
+
+.app-input:focus {
+  border-color: #326b80;
+  box-shadow: 0 0 0 3px rgba(50, 107, 128, 0.12);
+}
+
+.app-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.app-button-primary {
+  background: #326b80;
+  color: white;
+}
+
+.app-button-primary:hover {
+  background: #28596b;
+}
+
+.app-button-outline {
+  border-color: #d8dcd9;
+  background: white;
+  color: #343c42;
+}
+
+.app-button-outline:hover {
+  background: #f3f4f1;
+}
+
+.app-button-danger {
+  border-color: #efd7d5;
+  background: #fff;
+  color: #b64e4e;
+}
+
+.app-button-danger:hover {
+  background: #fff4f2;
+}
+
+.app-tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #dce5e7;
+  border-radius: 7px;
+  background: #f2f7f7;
+  padding: 5px 9px;
+  color: #326b80;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  background: #e9e9e4;
+}
+
+.page-section {
+  padding-top: 34px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 640px) {
+  .app-container {
+    width: calc(100% - 24px);
+  }
+
+  .page-section {
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .profile-photo {
+    height: 280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
