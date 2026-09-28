@@ -37,7 +37,7 @@ const Navbar = () => {
 
   return (
     <header className="app-navbar">
-      <div className="app-container flex min-h-[68px] items-center justify-between">
+      <div className="app-container flex min-h-17 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <span className="brand-mark">D</span>
 

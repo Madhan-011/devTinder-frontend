@@ -142,7 +142,7 @@ const UserCard = ({ user, showActions = true }) => {
 
   return (
     <article
-      className={`app-panel w-full max-w-[390px] overflow-hidden ${
+      className={`app-panel w-full max-w-97.5 overflow-hidden ${
         showActions ? "select-none" : ""
       }`}
       style={{
@@ -208,7 +208,7 @@ const UserCard = ({ user, showActions = true }) => {
           About
         </h3>
 
-        <p className="mt-2 whitespace-pre-line break-words text-sm leading-6 text-base-content/75">
+        <p className="mt-2 whitespace-pre-line wrap-break-word text-sm leading-6 text-base-content/75">
           {about || "This developer hasn't added a bio yet."}
         </p>
 

@@ -69,7 +69,7 @@ const Feed = () => {
           </p>
         </div>
 
-        <div className="relative mx-auto h-[570px] w-full max-w-[390px]">
+        <div className="relative mx-auto h-142.5 w-full max-w-97.5">
           {feed[1] && (
             <div className="absolute inset-x-0 top-4 z-10 flex justify-center">
               <div className="w-[94%] scale-[0.96]">

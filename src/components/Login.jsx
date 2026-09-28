@@ -5,6 +5,10 @@ import { addUser } from "../store/subStore/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import NavbarLogin from "./NavbarLogin";
+import {
+  validateLogin,
+  validateSignup,
+} from "../utils/validation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,94 +16,36 @@ const Login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
-  const [error, setError] = useState("");
+
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    general: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const validateForm = () => {
-    const trimmedFirstName = firstName.trim();
-    const trimmedLastName = lastName.trim();
-    const trimmedEmail = email.trim();
+  const clearFieldError = (field) => {
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      [field]: "",
+      general: "",
+    }));
+  };
 
-    if (!trimmedEmail) {
-      setError("Email address is required.");
-      return false;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      setError("Please enter a valid email address.");
-      return false;
-    }
-
-    if (!password) {
-      setError("Password is required.");
-      return false;
-    }
-
-    if (isLoginForm) {
-      setError("");
-      return true;
-    }
-
-    if (!trimmedFirstName) {
-      setError("First name is required.");
-      return false;
-    }
-
-    if (trimmedFirstName.length < 4) {
-      setError("First name must be at least 4 characters.");
-      return false;
-    }
-
-    if (trimmedFirstName.length > 50) {
-      setError("First name cannot exceed 50 characters.");
-      return false;
-    }
-
-    if (!trimmedLastName) {
-      setError("Last name is required.");
-      return false;
-    }
-
-    if (trimmedLastName.length > 50) {
-      setError("Last name cannot exceed 50 characters.");
-      return false;
-    }
-
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return false;
-    }
-
-    if (!/[A-Z]/.test(password)) {
-      setError(
-        "Password must contain at least one uppercase letter.",
-      );
-      return false;
-    }
-
-    if (!/[a-z]/.test(password)) {
-      setError(
-        "Password must contain at least one lowercase letter.",
-      );
-      return false;
-    }
-
-    if (!/[0-9]/.test(password)) {
-      setError("Password must contain at least one number.");
-      return false;
-    }
-
-    if (!/[^A-Za-z0-9]/.test(password)) {
-      setError(
-        "Password must contain at least one special character.",
-      );
-      return false;
-    }
-
-    setError("");
-    return true;
+  const clearErrors = () => {
+    setErrors({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      general: "",
+    });
   };
 
   const getErrorMessage = (err, fallbackMessage) => {
@@ -113,36 +59,78 @@ const Login = () => {
       return responseData.message;
     }
 
+    if (responseData?.error) {
+      return responseData.error;
+    }
+
     return fallbackMessage;
   };
 
+  const validateForm = () => {
+    const validationErrors = isLoginForm
+      ? validateLogin(email, password)
+      : validateSignup(
+          firstName,
+          lastName,
+          email,
+          password,
+        );
+
+    setErrors({
+      firstName: validationErrors.firstName || "",
+      lastName: validationErrors.lastName || "",
+      email: validationErrors.email || "",
+      password: validationErrors.password || "",
+      general: "",
+    });
+
+    return Object.keys(validationErrors).length === 0;
+  };
+
   const handleLogin = async () => {
-    if (!validateForm()) return;
+    if (isSubmitting) return;
+
+    const isValid = validateForm();
+
+    if (!isValid) return;
+
+    setIsSubmitting(true);
 
     try {
       const data = await axios.post(
         BASE_URL + "/login",
         {
-          email: email.trim(),
+          email: email.trim().toLowerCase(),
           password,
         },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+        },
       );
 
       dispatch(addUser(data.data));
       navigate("/");
     } catch (err) {
-      setError(
-        getErrorMessage(
+      setErrors((currentErrors) => ({
+        ...currentErrors,
+        general: getErrorMessage(
           err,
           "Unable to log in. Please check your credentials.",
         ),
-      );
+      }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleSignUp = async () => {
-    if (!validateForm()) return;
+    if (isSubmitting) return;
+
+    const isValid = validateForm();
+
+    if (!isValid) return;
+
+    setIsSubmitting(true);
 
     try {
       const res = await axios.post(
@@ -150,32 +138,37 @@ const Login = () => {
         {
           firstName: firstName.trim(),
           lastName: lastName.trim(),
-          email: email.trim(),
+          email: email.trim().toLowerCase(),
           password,
         },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+        },
       );
 
       dispatch(addUser(res.data.data));
       navigate("/profile");
     } catch (err) {
-      setError(
-        getErrorMessage(
+      setErrors((currentErrors) => ({
+        ...currentErrors,
+        general: getErrorMessage(
           err,
           "Unable to create your account. Please try again.",
         ),
-      );
+      }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const switchToLogin = () => {
     setIsLoginForm(true);
-    setError("");
+    clearErrors();
   };
 
   const switchToSignUp = () => {
     setIsLoginForm(false);
-    setError("");
+    clearErrors();
   };
 
   const handleSubmit = (e) => {
@@ -282,16 +275,33 @@ const Login = () => {
                       id="firstName"
                       type="text"
                       value={firstName}
-                      className="app-input"
+                      className={`app-input ${
+                        errors.firstName
+                          ? "app-input-error"
+                          : ""
+                      }`}
                       placeholder="Your first name"
                       minLength={4}
                       maxLength={50}
+                      required
                       autoComplete="given-name"
+                      aria-invalid={Boolean(
+                        errors.firstName,
+                      )}
                       onChange={(e) => {
                         setFirstName(e.target.value);
-                        setError("");
+                        clearFieldError("firstName");
                       }}
                     />
+
+                    {errors.firstName && (
+                      <p
+                        className="field-error"
+                        role="alert"
+                      >
+                        {errors.firstName}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -306,15 +316,32 @@ const Login = () => {
                       id="lastName"
                       type="text"
                       value={lastName}
-                      className="app-input"
+                      className={`app-input ${
+                        errors.lastName
+                          ? "app-input-error"
+                          : ""
+                      }`}
                       placeholder="Your last name"
                       maxLength={50}
+                      required
                       autoComplete="family-name"
+                      aria-invalid={Boolean(
+                        errors.lastName,
+                      )}
                       onChange={(e) => {
                         setLastName(e.target.value);
-                        setError("");
+                        clearFieldError("lastName");
                       }}
                     />
+
+                    {errors.lastName && (
+                      <p
+                        className="field-error"
+                        role="alert"
+                      >
+                        {errors.lastName}
+                      </p>
+                    )}
                   </div>
                 </>
               )}
@@ -331,14 +358,30 @@ const Login = () => {
                   id="email"
                   type="email"
                   value={email}
-                  className="app-input"
+                  className={`app-input ${
+                    errors.email
+                      ? "app-input-error"
+                      : ""
+                  }`}
                   placeholder="name@example.com"
                   autoComplete="email"
+                  inputMode="email"
+                  required
+                  aria-invalid={Boolean(errors.email)}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    setError("");
+                    clearFieldError("email");
                   }}
                 />
+
+                {errors.email && (
+                  <p
+                    className="field-error"
+                    role="alert"
+                  >
+                    {errors.email}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -353,45 +396,82 @@ const Login = () => {
                   id="password"
                   type="password"
                   value={password}
-                  className="app-input"
+                  className={`app-input ${
+                    errors.password
+                      ? "app-input-error"
+                      : ""
+                  }`}
                   placeholder="Enter your password"
-                  minLength={isLoginForm ? undefined : 8}
+                  minLength={
+                    isLoginForm ? undefined : 8
+                  }
+                  required
                   autoComplete={
                     isLoginForm
                       ? "current-password"
                       : "new-password"
                   }
+                  aria-invalid={Boolean(errors.password)}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    setError("");
+                    clearFieldError("password");
                   }}
                 />
 
                 {!isLoginForm && (
                   <p className="password-hint">
-                    Use 8+ characters with uppercase, lowercase,
-                    number and special character.
+                    Use 8+ characters with uppercase,
+                    lowercase, number and special character.
+                  </p>
+                )}
+
+                {errors.password && (
+                  <p
+                    className="field-error"
+                    role="alert"
+                  >
+                    {errors.password}
                   </p>
                 )}
               </div>
 
-              {error && (
-                <p role="alert" className="form-error">
-                  {typeof error === "string"
-                    ? error
-                    : error?.message || "Something went wrong"}
-                </p>
+              {errors.general && (
+                <div
+                  className="form-error"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {errors.general}
+                </div>
               )}
 
               <button
                 type="submit"
                 className="app-button app-button-primary mt-6 w-full"
+                disabled={isSubmitting}
               >
-                {isLoginForm
-                  ? "Log in"
-                  : "Create account"}
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="loading loading-spinner loading-sm"
+                      aria-hidden="true"
+                    />
 
-                <span aria-hidden="true">→</span>
+                    {isLoginForm
+                      ? "Logging in..."
+                      : "Creating account..."}
+                  </>
+                ) : (
+                  <>
+                    {isLoginForm
+                      ? "Log in"
+                      : "Create account"}
+
+                    <span aria-hidden="true">
+                      →
+                    </span>
+                  </>
+                )}
               </button>
             </form>
 

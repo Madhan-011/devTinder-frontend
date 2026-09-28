@@ -100,7 +100,7 @@ const Requests = () => {
                       </p>
                     )}
 
-                    <p className="mt-2 line-clamp-2 break-words text-sm text-gray-600">
+                    <p className="mt-2 line-clamp-2 wrap-break-word text-sm text-gray-600">
                       {about || "No bio available."}
                     </p>
                   </div>

@@ -71,7 +71,7 @@ const Connections = () => {
                   />
 
                   <div className="min-w-0">
-                    <h2 className="truncate font-bold text-gray-800">
+                    <h2 className="truncate font-bold text-gray-600">
                       {firstName} {lastName}
                     </h2>
 
@@ -81,7 +81,7 @@ const Connections = () => {
                       </p>
                     )}
 
-                    <p className="mt-2 line-clamp-3 break-words text-sm leading-5 text-gray-600">
+                    <p className="mt-2 line-clamp-3 wrap-break-word text-sm leading-5 text-gray-600">
                       {about || "No bio available."}
                     </p>
 
