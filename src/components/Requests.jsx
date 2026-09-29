@@ -90,7 +90,7 @@ const Requests = () => {
                   />
 
                   <div className="min-w-0 flex-1">
-                    <h2 className="font-bold text-gray-800">
+                    <h2 className="font-bold text-gray-400">
                       {firstName} {lastName}
                     </h2>
 
